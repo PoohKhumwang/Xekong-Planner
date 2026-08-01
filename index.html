@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <div class="calendar__banner--month">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous month">‹</button>
+      <h1 id="monthLabel">Page 1</h1>
+      <button class="nav-btn" id="nextBtn" aria-label="Next month">›</button>
+    </div>
+    <div class="table-wrap">
+      <table class="calendar">
+        <tbody id="calendarBody"></tbody>
+      </table>
+    </div>
+    <div class="footer">
+      <div class="legend">
+        <span class="swatch training" style="margin-left:.75rem;"></span> Training
+        <span class="swatch testing" style="margin-left:.75rem;"></span> Done
+      </div>
+      <div class="status" id="counter"></div>
+      <span id="sync-badge" class="sync-badge offline">○ OFFLINE</span>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
