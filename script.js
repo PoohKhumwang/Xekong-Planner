@@ -198,7 +198,7 @@
       calendarBody.appendChild(tr);
     }
 
-    counter.textContent = `Training: ${counts.training}  |  Total: ${TOTAL}  |  Done: ${counts.testing}`;
+    if (counter) counter.textContent = `Training: ${counts.training}  |  Total: ${TOTAL}  |  Done: ${counts.testing}`;
   }
 
   function goToPage(page) {
