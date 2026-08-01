@@ -39,12 +39,11 @@ main {
   border-bottom: none;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: .75rem;
+  justify-content: space-between;
+  padding: .75rem 1.25rem;
 }
 
-.calendar__banner--month h1 {
+.banner-title {
   background-color: var(--black);
   color: var(--cream);
   display: inline-block;
@@ -55,7 +54,19 @@ main {
   padding: .5rem 1.5rem;
   text-transform: uppercase;
   margin: 0;
-  min-width: 8rem;
+}
+
+.banner-nav {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.page-indicator {
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  min-width: 3.5rem;
   text-align: center;
 }
 
@@ -280,9 +291,8 @@ tr:nth-child(even)>.calendar__day__cell:nth-child(even) {
     margin-top: auto;
   }
 
-  .calendar__banner--month h1 {
+  .banner-title {
     font-size: clamp(1rem, 5vw, 1.4rem);
-    min-width: 5rem;
     padding: .35rem .75rem;
   }
 
