@@ -219,7 +219,7 @@
       calendarBody.appendChild(tr);
     }
 
-    if (counter) counter.textContent = `Training: ${counts.training}  |  Total: ${TOTAL}  |  Done: ${counts.testing}`;
+    if (counter) counter.textContent = `Training: ${TRAINING_DATES_RAW.length}  |  Total: ${TOTAL}  |  Done: ${counts.testing}`;
   }
 
   function goToPage(page) {
