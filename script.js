@@ -51,13 +51,15 @@
       "2026-01-09", "2026-01-14", "2026-01-19", "2026-01-24", "2026-01-29",
       "2026-02-03", "2026-02-08", "2026-02-13", "2026-02-23", "2026-03-15",
       "2026-03-25", "2026-03-27", "2026-03-30"
-    ].filter(date => !TRAINING_DATES_RAW.has(date))
+    ]
 
 
 
 
   const TRAINING_DATE_SET = new Set(TRAINING_DATES_RAW);
-  const ALL_DATES = [...TRAINING_DATES_RAW, ...CANDIDATE_DATES_RAW].sort();
+  // Remove any training dates from the candidate list so there are no duplicates
+  const CANDIDATE_DATES = CANDIDATE_DATES_RAW.filter(d => !TRAINING_DATE_SET.has(d));
+  const ALL_DATES = [...TRAINING_DATES_RAW, ...CANDIDATE_DATES].sort();
 
   function formatLabel(iso) {
     const [y, m, d] = iso.split('-');
