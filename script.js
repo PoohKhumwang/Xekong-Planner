@@ -53,11 +53,7 @@
       "2026-03-25", "2026-03-27", "2026-03-30"
     ]
 
-
-
-
   const TRAINING_DATE_SET = new Set(TRAINING_DATES_RAW);
-  // Remove any training dates from the candidate list so there are no duplicates
   const CANDIDATE_DATES = CANDIDATE_DATES_RAW.filter(d => !TRAINING_DATE_SET.has(d));
   const ALL_DATES = [...TRAINING_DATES_RAW, ...CANDIDATE_DATES].sort();
 
@@ -78,7 +74,6 @@
     COLS = isMobile ? 5 : 10;
     ROWS = isMobile ? 14 : 7;
   }
-  // Global index 1 = first entry in ALL_DATES (sorted)
 
   const BIN_ID = '6a67022cf5f4af5e29c66d2b';
   const API_KEY = '$2a$10$tcV2oq9UU3be3ApDEkP8XexPYCgi9tOwNStFJ3ukLZa9eUEV4etUC';
@@ -160,6 +155,29 @@
 
   const TOTAL = ALL_DATES.length;
 
+  function getGlobalDoneCount() {
+    let done = 0;
+    const lastPage = maxPage();
+
+    for (let p = 1; p <= lastPage; p++) {
+      const raw = localStorage.getItem(storageKey(p));
+      if (!raw) continue;
+
+      try {
+        const obj = JSON.parse(raw);
+        if (!obj || typeof obj !== 'object') continue;
+
+        Object.values(obj).forEach((value) => {
+          if (value === 'testing') done++;
+        });
+      } catch (e) {
+        // Ignore malformed page state.
+      }
+    }
+
+    return done;
+  }
+
   function applyGridSettings() {
     updateLayout();
     document.documentElement.style.setProperty('--col-width', `calc(100% / ${COLS})`);
@@ -172,12 +190,11 @@
 
     const startGlobal = (pageNumber - 1) * pageSize() + 1;
     let counts = { training: 0, testing: 0, none: 0 };
-    let shown = 0;
 
     for (let row = 0; row < ROWS; row++) {
       const tr = document.createElement('tr');
       for (let col = 0; col < COLS; col++) {
-        const pos = row * COLS + col + 1; // 1-based position within this page
+        const pos = row * COLS + col + 1;
         const globalDay = startGlobal + pos - 1;
         const td = document.createElement('td');
         td.className = 'calendar__day__cell';
@@ -197,7 +214,6 @@
           td.setAttribute('aria-pressed', state ? 'true' : 'false');
           td.setAttribute('aria-label', `${label}, ${state || 'none'}`);
           if (state) td.classList.add(`is-${state}`);
-          shown++;
           counts[state || 'none']++;
 
           if (!isTraining) {
@@ -222,7 +238,7 @@
       calendarBody.appendChild(tr);
     }
 
-    if (counter) counter.textContent = `Training: ${TRAINING_DATES_RAW.length}  |  Total: ${TOTAL}  |  Done: ${counts.testing}`;
+    if (counter) counter.textContent = `Training: ${TRAINING_DATES_RAW.length}  |  Total: ${TOTAL}  |  Done: ${getGlobalDoneCount()}`;
   }
 
   function goToPage(page) {
